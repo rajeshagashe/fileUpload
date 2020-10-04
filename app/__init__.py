@@ -4,7 +4,6 @@ import importlib
 from flask import Flask
 from flask_migrate import Migrate
 
-from app.extensions import sql_db
 from app.views import blueprints
 
 
@@ -16,7 +15,6 @@ def create_app(test_config=None):
         # load global environments, when not testing
         app.config.from_pyfile("../.env")
         #connect db
-        sql_db.init_app(app)
     else:
         # load the test config if passed in
         app.config.from_mapping(test_config)
@@ -41,14 +39,8 @@ def create_app(test_config=None):
 # flask db migrate
 # flask db upgrade
 from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate#, MigrateCommand
+from flask_migrate import Migrate
 from app.models.movies import MoviesData 
 
 app = create_app()
 migrate = Migrate(app, sql_db)
-
-from src import populate_movies_db
-
-@app.cli.command('populate_db')
-def populate_db():
-    populate_movies_db.run()
