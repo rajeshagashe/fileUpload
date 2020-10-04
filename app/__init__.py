@@ -38,9 +38,8 @@ def create_app(test_config=None):
 # flask db init
 # flask db migrate
 # flask db upgrade
-from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
-from app.models.movies import MoviesData 
+
+# from flask_migrate import Migrate 
 
 app = create_app()
-migrate = Migrate(app, sql_db)
+# migrate = Migrate(app, **(db conn))
