@@ -30,20 +30,24 @@ def post_file_details():
     try:
         uploaded_file = request.get_json()
         if not uploaded_file:
-            uploaded_file = request.form
+            uploaded_file = dict(request.form)
 
         file_name = uploaded_file.get("file_name", "N/A")
         file_size = uploaded_file.get("file_size", "N/A")
-        file_upload_start = uploaded_file.get("file_upload_start", "N/A")
-        file_upload_complete = uploaded_file.get("file_upload_complete", "N/A") 
+        file_upload_start = uploaded_file.get("start", "N/A")
+        file_upload_complete = uploaded_file.get("finish", "N/A") 
 
-        entry = file_name + '\n' + file_size + '\n' + file_upload_start +\
-             '\n' + file_upload_complete + '\n' + '*' * 20 + '\n' * 5
+        entry = "file_name : " + file_name + '\n' + "file_size : " + file_size +\
+            ' B' + '\n' + "file_upload_start : " + file_upload_start + '\n' + "file_upload_complete : "\
+                + file_upload_complete + '\n' + '**' * 20 + '\n' * 2
 
-        with open("../../logs/uploaded_files.log", "a") as log:
+
+        with open("./logs/uploaded_files.log", "a") as log:
             log.write(entry)
 
+        print(entry)
         return json.dumps(uploaded_file)
 
     except Exception as e:
+        print(e.__str__())
         return e.__str__()
