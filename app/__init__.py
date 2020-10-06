@@ -3,6 +3,7 @@ import importlib
 
 from flask import Flask
 from flask_migrate import Migrate
+from flask_cors import CORS
 
 from app.views import blueprints
 
@@ -32,6 +33,7 @@ def create_app(test_config=None):
     def hello():
         return 'Hello, World!'
 
+    CORS(app)
     return app
 
 # migrations -->

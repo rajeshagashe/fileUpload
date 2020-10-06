@@ -1,7 +1,6 @@
 from flask import (
     Blueprint, request, current_app
 )
-
 from app.extensions import create_s3
 
 import traceback
@@ -20,8 +19,8 @@ def get_presigned_url():
             + string.ascii_lowercase + string.digits) for _ in range(10))
 
         s3 = create_s3()    
-        url = s3.generate_presigned_post(Bucket=bucket_name, Key=key, ExpiresIn=3600)
-        return json.dumps(url)
+        url = s3.generate_presigned_post(Bucket=bucket_name, Key=key, ExpiresIn=36000)
+        return url
 
     except Exception as e:
         return e.__str__()
@@ -43,8 +42,6 @@ def post_file_details():
 
         with open("../../logs/uploaded_files.log", "a") as log:
             log.write(entry)
-
-        print(entry)
 
         return json.dumps(uploaded_file)
 
